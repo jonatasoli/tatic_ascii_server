@@ -55,7 +55,7 @@ async fn handle_websocket(socket: WebSocket, match_id: String, state: AppState) 
         });
         
         if let Err(e) = sender
-            .send(Message::Text(initial_state.to_string()))
+            .send(Message::Text(initial_state.to_string().into()))
             .await
         {
             error!("Erro ao enviar estado inicial: {}", e);
@@ -66,7 +66,7 @@ async fn handle_websocket(socket: WebSocket, match_id: String, state: AppState) 
     // Task para enviar broadcasts
     let mut send_task = tokio::spawn(async move {
         while let Some(msg) = rx.recv().await {
-            if sender.send(Message::Text(msg)).await.is_err() {
+            if sender.send(Message::Text(msg.into())).await.is_err() {
                 break;
             }
         }
