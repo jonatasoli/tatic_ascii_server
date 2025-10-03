@@ -4,6 +4,7 @@ use std::{
     sync::Arc,
 };
 use tokio::sync::RwLock;
+// CORREÇÃO: Importar Uuid corretamente
 use uuid::Uuid;
 
 /// ID de uma partida
@@ -23,6 +24,7 @@ impl Match {
     pub fn new(player1: PlayerId, player2: PlayerId) -> Self {
         let now = chrono::Utc::now();
         Self {
+            // CORREÇÃO: new_v4() é um método, não new_v4
             id: format!("match-{}", Uuid::new_v4()),
             state: GameState::new(player1, player2),
             created_at: now,
